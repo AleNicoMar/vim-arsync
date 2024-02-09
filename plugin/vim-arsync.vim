@@ -11,6 +11,9 @@ function! LoadConf()
     if strlen(l:config_file) > 0
         let l:conf_options = readfile(l:config_file)
         for i in l:conf_options
+            if i =~ '^#'
+                continue
+            endif
             let l:var_name = substitute(i[0:stridx(i, ' ')], '^\s*\(.\{-}\)\s*$', '\1', '')
             if l:var_name == 'ignore_path'
                 let l:var_value = eval(substitute(i[stridx(i, ' '):], '^\s*\(.\{-}\)\s*$', '\1', ''))
